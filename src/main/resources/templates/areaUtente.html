@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/base.html :: headBase"></head>
+
+<head>
+	<title>Rec. Studio - Area riservata</title>
+</head>
+
+<body style="background-color: #0a0c0d;">
+	<div th:replace="fragments/base.html :: intestazione">Fragment intestazione</div>
+
+	<div class="container mt-4 mb-4">
+		<div class="row">
+			<!-- colonna delle informazioni personali -->
+			<div class="col m-2 d-flex flex-column align-items-center">
+				<h2 class="text-center" style="color:white;">I tuoi dati personali</h2>
+				<div class="card" style="width: 24rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="|${utente.nome} ${utente.cognome}|">Nome e cognome dell'utente</h5>
+						<p class="card-text">Eventuale breve bio</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li th:text="|Nome d'arte: ${utente.nomeArte}|" class="list-group-item">Nome d'arte</li>
+						<li th:text="|Data di nascita: ${#temporals.format(utente.dataDiNascita, 'dd-MM-yyyy')}|" class="list-group-item">Data di nascita</li>
+						<li th:text="|Indirizzo: ${utente.indirizzo}|" class="list-group-item">Indirizzo</li>
+						<li th:text="|Email: ${utente.email}|" class="list-group-item">Email</li>
+					</ul>
+					<div class="card-body">
+						<a th:href="@{/modificaInfoForm}" href="" class="card-link"><button type="button" class="btn btn-primary">Modifica Info</button></a>
+						<a href="#" class="card-link"><button type="button" class="btn btn-danger">Altra funzione</button></a>
+					</div>
+				</div>
+			</div>
+			<!-- colonna con i prossimi appuntamenti -->
+	        <div class="col-4 m-2">
+	          <h2 class="text-center" style="color:white;">Prossimi appuntamenti</h2>
+	            <div th:each="prenotazione : ${prenotazioni}" class="card w-150% mt-2 mb-2">
+					<div class="card-body">
+						<h5 th:text="${#temporals.format(prenotazione.orario, 'dd-MM-yyyy HH:mm')}" class="card-title">Data prenotazione</h5>
+						<h6 th:text="${prenotazione.utente} ?: 'LIBERA'" class="card-subtitle mb-2 text-muted">Nome utente</h6>
+						<p th:if="${prenotazione.tecnico} != null" th:text="|Tecnico: ${prenotazione.tecnico.nome} ${prenotazione.tecnico.cognome}|"></p>
+						<p th:if="${prenotazione.utente} != null" class="card-text text-success">Confermata</p>
+						<a href="#" class="card-link"><button type="button" class="btn btn-primary">Dettagli</button></a>
+						<a th:href="@{'/annullaPrenotazione/'+${prenotazione.id}}" class="card-link"><button type="button" class="btn btn-danger">Annulla prenotazione</button></a></a>
+					</div>
+				</div>
+	        </div>
+	        <!-- altra colonna in cui mettere qualcosa -->
+	        <div class="col m-2 d-flex flex-column align-items-center">
+				<h2 class="text-center" style="color:white;">I tuoi progetti</h2>
+				<div class="p-4">
+					<a th:href="@{/nuovoProgetto}"><button type="button" class="btn btn-success">Crea nuovo progetto</button></a>
+				</div>
+				<div th:each="progetto : ${progetti}" class="card" style="width: 24rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${progetto.nome}">Nome del progetto</h5>
+						<p th:text="${progetto.descrizione}" class="card-text">Descrizione</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li th:text="|Data inizio: ${#temporals.format(progetto.dataInizio, 'dd-MM-yyyy')}|" class="list-group-item">Data inizio</li>
+						<li th:if="${progetto.finito}" class="list-group-item">Stato: <p class="text-success" style="display: inline;">Completato</p></li>
+						<li th:if="!${progetto.finito}" class="list-group-item">Stato: <p class="text-danger" style="display: inline;">In corso</p></li>
+					</ul>
+					<div class="card-body">
+						<a th:href="@{/modificaInfoForm}" href="" class="card-link"><button type="button" class="btn btn-primary">Modifica Info</button></a>
+						<a href="#" class="card-link"><button type="button" class="btn btn-danger">Altra funzione</button></a>
+					</div>
+				</div>
+	        </div>
+	    </div>
+    </div>
+
+	<div th:replace="fragments/base.html :: fondoPagina"></div>
+
+	<div th:replace="fragments/base.html :: scriptBootstrap"></div>
+
+</body>
+
+</html>

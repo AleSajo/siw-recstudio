@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/base.html :: headBase"></head>
+
+<head>
+	<title>Rec. Studio - Nuovo Tecnico</title>
+</head>
+
+<body style="background-color: black;">
+	<div th:replace="fragments/base.html :: intestazione">Fragment intestazione</div>
+
+	<div class="container-lg" style="margin-top: 10%; margin-bottom: 10%; max-width: 400px">
+		<form th:action="@{/creaTecnico}" method="POST" th:object="${tecnico}">
+			<h2 style="color: white;">Inserisci i dettagli del tecnico</h2>
+			
+			<div class="mb-3">
+				<label for="inputNome" class="form-label" style="color: white;">Nome</label>
+				<input th:field="*{nome}" name="nome" type="text"  class="form-control" required
+					id="inputNome" aria-describedby="emailHelp">
+				<div th:if="${#fields.hasErrors('nome')}" 
+					th:errors="*{nome}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputCognome" class="form-label" style="color: white;">Cognome</label>
+				<input type="text" name="cognome" th:field="*{cognome}" style="margin-bottom: 10px;"  
+					id="inputDataDiNascita" class="form-control" required>
+				<div th:if="${#fields.hasErrors('cognome')}" 
+					th:errors="${cognome}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputEmail" class="form-label" style="color: white;">Email</label>
+				<input th:field="*{email}" name="email" type="text"  class="form-control"
+					id="inputEmail">
+				<div th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputTelefono" class="form-label" style="color: white;">Telefono</label>
+				<input th:field="*{telefono}" name="telefono" type="text"  class="form-control"
+					id="inputTelefono">
+				<div th:if="${#fields.hasErrors('telefono')}"
+                th:errors="*{telefono}" th:style="'color:red'"></div>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Conferma</button>
+
+		</form>
+
+	</div>
+
+	<div th:replace="fragments/base.html :: fondoPagina"></div>
+
+	<div th:replace="fragments/base.html :: scriptBootstrap"></div>
+
+</body>
+
+</html>

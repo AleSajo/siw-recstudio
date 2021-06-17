@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/base.html :: headBase"></head>
+
+<head>
+	<title>Rec. Studio - Nuovo Progetto</title>
+</head>
+
+<body style="background-color: black;">
+	<div th:replace="fragments/base.html :: intestazione">Fragment intestazione</div>
+
+	<div class="container-lg" style="margin-top: 10%; margin-bottom: 10%; max-width: 400px">
+		<form th:action="@{/creaProgetto}" method="POST" th:object="${progetto}">
+			<h2 style="color: white;">Inserisci i dettagli del progetto</h2>
+			
+			<div class="mb-3">
+				<label for="inputNome" class="form-label" style="color: white;">Nome</label>
+				<input th:field="*{nome}" name="nome" type="text"  class="form-control" required
+					id="inputNome">
+				<div th:if="${#fields.hasErrors('nome')}" 
+					th:errors="*{nome}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputGenere" class="form-label" style="color: white;">Genere musicale</label>
+				<input type="text" name="genereMusicale" th:field="*{genereMusicale}" style="margin-bottom: 10px;"  
+					id="inputGenere" class="form-control">
+				<div th:if="${#fields.hasErrors('genereMusicale')}" 
+					th:errors="${genereMusicale}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputDescrizione" class="form-label" style="color: white;">Breve descrizione</label>
+				<input type="text" name="descrizione" th:field="*{descrizione}" style="margin-bottom: 10px;"  
+					id="inputDescrizione" class="form-control">
+				<div th:if="${#fields.hasErrors('descrizione')}" 
+					th:errors="${descrizione}" th:style="'color:red'"></div>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Conferma</button>
+
+		</form>
+
+	</div>
+
+	<div th:replace="fragments/base.html :: fondoPagina"></div>
+
+	<div th:replace="fragments/base.html :: scriptBootstrap"></div>
+
+</body>
+
+</html>

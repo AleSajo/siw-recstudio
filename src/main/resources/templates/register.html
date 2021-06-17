@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/base.html :: headBase"></head>
+
+<head>
+	<title>Rec. Studio - Register</title>
+</head>
+
+<body style="background-color: black;">
+	<div th:replace="fragments/base.html :: intestazione">Fragment intestazione</div>
+
+	<div class="container-sm" style="margin-top: 10%; margin-bottom: 10%; max-width: 200px">
+		<form th:action="@{/register}" method="POST">
+			<h2 style="color: white;">Register</h2>
+			<div class="mb-3">
+				<label for="inputUsername" class="form-label" style="color: white;">Username</label>
+				<input th:field="${credentials.username}" name="username" type="text" required class="form-control"
+					id="inputUsername" aria-describedby="emailHelp">
+				<div th:if="${#fields.hasErrors('credentials.username')}" 
+					th:errors="${credentials.username}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputPassword" class="form-label" style="color: white;">Password</label>
+				<input th:field="${credentials.password}" name="password" type="password" required class="form-control"
+					id="inputPassword">
+				<div th:if="${#fields.hasErrors('credentials.password')}"
+                th:errors="${credentials.password}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputNome" class="form-label" style="color: white;">Nome</label>
+				<input th:field="${utente.nome}" name="nome" type="text" required class="form-control"
+					id="inputNome">
+				<div th:if="${#fields.hasErrors('utente.nome')}"
+                th:errors="${utente.nome}" th:style="'color:red'"></div>
+			</div>
+			<div class="mb-3">
+				<label for="inputCognome" class="form-label" style="color: white;">Cognome</label>
+				<input th:field="${utente.cognome}" name="cognome" type="text" required class="form-control"
+					id="inputCognome">
+				<div th:if="${#fields.hasErrors('utente.cognome')}"
+                th:errors="${utente.cognome}" th:style="'color:red'"></div>
+			</div>
+			<button type="submit" class="btn btn-primary">Conferma</button>
+
+		</form>
+
+	</div>
+
+	<div th:replace="fragments/base.html :: fondoPagina"></div>
+
+	<div th:replace="fragments/base.html :: scriptBootstrap"></div>
+
+</body>
+
+</html>

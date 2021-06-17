@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/base.html :: headBase"></head>
+
+<head>
+	<title>Rec. Studio - Area Admin</title>
+</head>
+
+<body style="background-color: black;">
+	<div th:replace="fragments/base.html :: intestazione">Fragment intestazione</div>
+	
+	<!-- VECCHIO CONTAINER
+	<div class="container d-flex flex-column align-items-center">
+		<div class="p-4">
+			<a th:href="@{/nuovaSlot}"><button type="button" class="btn btn-success">Aggiungi nuova slot</button></a>
+		</div>
+		<div>
+			<div th:each="prenotazione : ${prenotazioni}" class="card w-150% mt-2 mb-2">
+				<div class="card-body">
+					<h5 th:text="${#temporals.format(prenotazione.orario, 'dd-MM-yyyy HH:mm')}" class="card-title">Data prenotazione</h5>
+					<h6 th:text="${prenotazione.utente} ?: 'LIBERA'" class="card-subtitle mb-2 text-muted">Nome utente</h6>
+					<p th:if="${prenotazione.utente} != null" class="card-text text-success">Prenotata</p>
+					<a href="#" class="card-link"><button type="button" class="btn btn-primary">Dettagli</button></a>
+					<a th:if="${prenotazione.utente} == null" th:href="@{'/eliminaSlot/'+${prenotazione.id}}" class="card-link"><button type="button" class="btn btn-danger">Elimina slot</button></a>
+					<a th:if="${prenotazione.utente} != null" th:href="@{'/revocaEliminaSlot/'+${prenotazione.id}}" class="card-link"><button type="button" class="btn btn-danger">Revoca appuntamento e elimina</button></a>
+				</div>
+			</div>
+		</div>
+		<div class="p-4">
+			<a th:if="${check} != null" th:href="@{/prenotazioniPassate}"><button type="button" class="btn btn-warning">Prenotazioni passate</button></a>
+		</div>
+	</div>
+	-->
+	
+	<!-- GRID -->
+	<div class="container mt-4 mb-4">
+		<div class="row">
+			<!-- colonna dei tecnici -->
+			<div class="col m-2 d-flex flex-column align-items-center">
+				<h2 class="text-center" style="color:white;">Tecnici</h2>
+				<div class="p-4">
+					<a th:href="@{/nuovoTecnico}"><button type="button" class="btn btn-success">Aggiungi nuovo tecnico</button></a>
+				</div>
+				<div th:each="tecnico : ${tecnici}" class="card mt-2 mb-2" style="width: 24rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="|${tecnico.nome} ${tecnico.cognome}|">Nome e cognome del tecnico</h5>
+						<p class="card-text">Eventuale breve bio</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li th:text="|Telefono: ${tecnico.telefono}|" class="list-group-item">Telefono</li>
+						<li th:text="|Email: ${tecnico.email}|" class="list-group-item">Email</li>
+					</ul>
+					<div class="card-body">
+						<a th:href="@{/modificaTecnicoForm}" href="" class="card-link"><button type="button" class="btn btn-primary">Modifica Info</button></a>
+						<a href="#" class="card-link"><button type="button" class="btn btn-danger">Elimina tecnico</button></a>
+					</div>
+				</div>
+			</div>
+			<!-- colonna con tutte le prenotazioni -->
+			<div class="col-4 m-2 container d-flex flex-column align-items-center">
+				<h2 class="text-center" style="color:white;">Tutte le prenotazioni</h2>
+				<div class="p-4">
+					<!-- primo div che contiene solo il pulsante -->
+					<a th:href="@{/nuovaSlot}"><button type="button" class="btn btn-success">Aggiungi nuova slot</button></a>
+				</div>
+				<div>
+					<!-- secondo div che contiene le prenotazioni in arrivo -->
+					<div th:each="prenotazione : ${prenotazioni}" class="card w-150% mt-2 mb-2">
+						<div class="card-body">
+							<h5 th:text="${#temporals.format(prenotazione.orario, 'dd-MM-yyyy HH:mm')}" class="card-title">Data prenotazione</h5>
+								<h6 th:text="${prenotazione.utente} ?: 'LIBERA'" class="card-subtitle mb-2 text-muted">Nome utente</h6>
+								<p th:if="${prenotazione.tecnico} != null" th:text="|Tecnico: ${prenotazione.tecnico.nome} ${prenotazione.tecnico.cognome}|"></p>
+								<p th:if="${prenotazione.utente} != null" class="card-text text-success">Prenotata</p>
+								<a th:href="@{'/modificaTecnicoPrenotazione/' + ${prenotazione.id}}" href="" class="card-link"><button type="button" class="btn btn-primary">Modifica tecnico</button></a>
+								<a th:if="${prenotazione.utente} == null" th:href="@{'/eliminaSlot/'+${prenotazione.id}}" class="card-link"><button type="button" class="btn btn-danger">Elimina slot</button></a>
+								<a th:if="${prenotazione.utente} != null" th:href="@{'/revocaEliminaSlot/'+${prenotazione.id}}" class="card-link"><button type="button" class="btn btn-danger">Revoca e elimina</button></a>
+							</div>
+						</div>
+				</div>
+				<div class="p-4">
+					<!-- terzo div con il bottone che mostra le prenotazioni vecchie -->
+					<a th:if="${check} != null" th:href="@{/prenotazioniPassate}"><button type="button" class="btn btn-warning">Prenotazioni passate</button></a>
+				</div>
+	        </div>
+	        <!-- altra colonna in cui mettere qualcosa -->
+	        <div class="col m-2 d-flex flex-column align-items-center">
+				<h2 class="text-center" style="color:white;">Progetti in corso</h2>
+				<div class="p-4">
+					<a><button type="button" class="btn btn-success">Bottone inutile</button></a>
+				</div>
+				<div th:each="progetto : ${progetti}" class="card" style="width: 24rem;">
+					<div class="card-body">
+						<h5 class="card-title" th:text="${progetto.nome}">Nome del progetto</h5>
+						<p th:text="${progetto.descrizione}" class="card-text">Descrizione</p>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li th:text="|Utente: ${progetto.utente.nome} ${progetto.utente.cognome}|" class="list-group-item">Nome utente</li>
+						<li th:text="|Data inizio: ${#temporals.format(progetto.dataInizio, 'dd-MM-yyyy')}|" class="list-group-item">Data inizio</li>
+						<li th:if="${progetto.finito}" class="list-group-item">Stato: <p class="text-success" style="display: inline;">Completato</p></li>
+						<li th:if="!${progetto.finito}" class="list-group-item">Stato: <p class="text-danger" style="display: inline;">In corso</p></li>
+					</ul>
+					<div class="card-body">
+						<a href="" class="card-link"><button type="button" class="btn btn-primary">Niente</button></a>
+						<a href="" class="card-link"><button type="button" class="btn btn-danger">Niente</button></a>
+					</div>
+				</div>
+	        </div>
+	    </div>
+    </div>
+
+	<div th:replace="fragments/base.html :: fondoPagina"></div>
+
+	<div th:replace="fragments/base.html :: scriptBootstrap"></div>
+
+</body>
+
+</html>
